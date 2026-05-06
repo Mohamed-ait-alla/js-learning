@@ -1,5 +1,5 @@
 /* 
- * Lab: Build a String Inspector
+ * Workshop: Build a String Inspector
  */
 
 const fccSentence = "freeCodeCamp is a great place to learn web development.";

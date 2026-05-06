@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Heritage Library Catalog
+ * Workshop: Build a Heritage Library Catalog
  */
 
 const rawCatalogCards = [

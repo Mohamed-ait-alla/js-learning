@@ -1,5 +1,5 @@
 /* 
- * Lab: Build a Teacher ChatBot
+ * Workshop: Build a Teacher ChatBot
  */
 
 console.log("Hi there!");

@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Recipe Tracker
+ * Workshop: Build a Recipe Tracker
  */
 
 const recipes = [];

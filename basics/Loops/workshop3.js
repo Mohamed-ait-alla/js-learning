@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Space Mission Roster
+ * Workshop: Build a Space Mission Roster
  */
 
 

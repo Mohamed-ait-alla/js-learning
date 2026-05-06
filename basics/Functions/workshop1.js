@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Calculator
+ * Workshop: Build a Calculator
  */
 
 

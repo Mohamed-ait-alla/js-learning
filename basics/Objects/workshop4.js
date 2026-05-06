@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Quiz Game
+ * Workshop: Build a Quiz Game
  */
 
 const questions = [

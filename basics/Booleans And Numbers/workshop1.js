@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Logic Checker App
+ * Workshop: Build a Logic Checker App
  */
 
 const hasDeveloperJob = true;

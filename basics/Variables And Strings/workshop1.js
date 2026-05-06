@@ -1,5 +1,5 @@
 /*
- * Lab: build a Javascript Trivia Bot
+ * Workshop: build a Javascript Trivia Bot
  */
 
 console.log("Hello! I'm your coding fun fact guide!");

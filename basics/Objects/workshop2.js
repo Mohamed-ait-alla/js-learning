@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Cargo Manifest Validator
+ * Workshop: Build a Cargo Manifest Validator
  */
 
 const normalizeUnits = (manifest) => {

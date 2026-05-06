@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Shopping List
+ * Workshop: Build a Shopping List
  */
 
 console.log("Grocery shopping list");

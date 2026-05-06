@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Loan Qualification Checker
+ * Workshop: Build a Loan Qualification Checker
  */
 
 

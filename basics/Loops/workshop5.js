@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Festival Crowd Flow Simulator
+ * Workshop: Build a Festival Crowd Flow Simulator
  */
 
 const morningGates = [

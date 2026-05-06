@@ -1,5 +1,5 @@
 /* 
- * Lab: Build a String Transformer
+ * Workshop: Build a String Transformer
  */
 
 const originalString = "I love cats.";

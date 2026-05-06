@@ -1,5 +1,5 @@
 /* 
- * Lab: Build a String Formatter
+ * Workshop: Build a String Formatter
  */
 
 const userInput = "   Hello World!   ";

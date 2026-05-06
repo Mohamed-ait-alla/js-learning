@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Word Counter
+ * Workshop: Build a Word Counter
  */
 
 

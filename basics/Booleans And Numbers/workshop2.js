@@ -1,5 +1,5 @@
 /*
- * Lab: Build a MathBot
+ * Workshop: Build a MathBot
  */
 
 const botName = "MathBot";

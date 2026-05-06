@@ -1,5 +1,5 @@
 /*
- * Lab: build a Wildlife Tracker
+ * Workshop: build a Wildlife Tracker
  */
 
 

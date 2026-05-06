@@ -1,6 +1,6 @@
 
 /*
- * Lab: Build a Sentence Maker
+ * Workshop: Build a Sentence Maker
  */
 
 let adjective = "adj";

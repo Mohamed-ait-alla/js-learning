@@ -1,5 +1,5 @@
 /*
- * Lab: Build a Sentence Analyzer
+ * Workshop: Build a Sentence Analyzer
  */
 
 
