@@ -70,11 +70,26 @@ function convertMarkdownImage(content) {
 	return result;
 }
 
+function convertMarkdownLink(content) {
+	const regex = /\[(.*?)\]\((.*?)\)/gm;
+	const result = content
+					.split("\n")
+					.filter(line => line.trim() !== "")
+					.map(line => {
+						const withImageTag = line.replace(regex, '<a href="$2">$1</a>');
+						return withImageTag;
+					})
+					.join("\n");
+
+	return result;	
+}
+
 function convertMarkdown() {
 	const headingRegex = /^[ \t]*(#+) (.+)/;
 	const boldRegex = /(\*\*|__)(.*?)\1/;
 	const italicRegex = /(\*|_)(.*?)\1/;
 	const imgRegex = /!\[(.*?)\]\((.*?)\)/;
+	const linkRegex = /\[(.*?)\]\((.*?)\)/;
 	markdownInput.addEventListener('input', (e) => {
 		if (headingRegex.test(e.target.value))
 		{
@@ -101,6 +116,13 @@ function convertMarkdown() {
 		{
 			console.log("------ Image -------");
 			const result = convertMarkdownImage(e.target.value);
+			htmlOutput.textContent = result;
+			preview.innerHTML = result;
+		}
+		else if (linkRegex.test(e.target.value))
+		{
+			console.log("------ Link -------");
+			const result = convertMarkdownLink(e.target.value);
 			htmlOutput.textContent = result;
 			preview.innerHTML = result;
 		}
