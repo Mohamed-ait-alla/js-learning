@@ -56,10 +56,25 @@ function convertMarkdownItalic(content) {
 	return result;
 }
 
+function convertMarkdownImage(content) {
+	const regex = /!\[(.*?)\]\((.*?)\)/gm;
+	const result = content
+					.split("\n")
+					.filter(line => line.trim() !== "")
+					.map(line => {
+						const withImageTag = line.replace(regex, '<img alt="$1" src="$2">');
+						return withImageTag;
+					})
+					.join("\n");
+
+	return result;
+}
+
 function convertMarkdown() {
 	const headingRegex = /^[ \t]*(#+) (.+)/;
 	const boldRegex = /(\*\*|__)(.*?)\1/;
 	const italicRegex = /(\*|_)(.*?)\1/;
+	const imgRegex = /!\[(.*?)\]\((.*?)\)/;
 	markdownInput.addEventListener('input', (e) => {
 		if (headingRegex.test(e.target.value))
 		{
@@ -79,6 +94,13 @@ function convertMarkdown() {
 		{
 			console.log("------ Italic -------");
 			const result = convertMarkdownItalic(e.target.value);
+			htmlOutput.textContent = result;
+			preview.innerHTML = result;
+		}
+		else if (imgRegex.test(e.target.value))
+		{
+			console.log("------ Image -------");
+			const result = convertMarkdownImage(e.target.value);
 			htmlOutput.textContent = result;
 			preview.innerHTML = result;
 		}
