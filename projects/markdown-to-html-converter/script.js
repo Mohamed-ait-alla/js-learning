@@ -28,13 +28,35 @@ function convertMarkdownHeading(content) {
 	return result;
 }
 
+function convertMarkdownBold(content) {
+	const regex = /(\*\*|__)(.*?)\1/gm; 
+	const result = content
+					.split("\n")
+					.filter(line => line.trim() !== "")
+					.map(line => {
+						const withStrong = line.replace(regex, "<strong>$2</strong>");
+						return (withStrong !== "<strong></strong>") ? `<p>${withStrong}</p>` : withStrong;
+					})
+					.join("\n");
+
+	return result;
+}
+
 function convertMarkdown() {
-	const headingRegex = /^[ \t]*(#+) (.+)/; 
+	const headingRegex = /^[ \t]*(#+) (.+)/;
+	const boldRegex = /(\*\*|__)(.*?)\1/;
 	markdownInput.addEventListener('input', (e) => {
 		if (headingRegex.test(e.target.value))
 		{
 			console.log("------ Heading -------");
 			const result = convertMarkdownHeading(e.target.value);
+			htmlOutput.textContent = result;
+			preview.innerHTML = result;
+		}
+		else if (boldRegex.test(e.target.value))
+		{
+			console.log("------ Strong -------");
+			const result = convertMarkdownBold(e.target.value);
 			htmlOutput.textContent = result;
 			preview.innerHTML = result;
 		}
