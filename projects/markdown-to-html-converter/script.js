@@ -42,9 +42,24 @@ function convertMarkdownBold(content) {
 	return result;
 }
 
+function convertMarkdownItalic(content) {
+	const regex = /(\*|_)(.*?)\1/gm;
+	const result = content
+					.split("\n")
+					.filter(line => line.trim() !== "")
+					.map(line => {
+						const withItalic = line.replace(regex, "<em>$2</em>");
+						return (withItalic !== "<em></em>") ? `<p>${withItalic}</p>` : withItalic;
+					})
+					.join("\n");
+
+	return result;
+}
+
 function convertMarkdown() {
 	const headingRegex = /^[ \t]*(#+) (.+)/;
 	const boldRegex = /(\*\*|__)(.*?)\1/;
+	const italicRegex = /(\*|_)(.*?)\1/;
 	markdownInput.addEventListener('input', (e) => {
 		if (headingRegex.test(e.target.value))
 		{
@@ -57,6 +72,13 @@ function convertMarkdown() {
 		{
 			console.log("------ Strong -------");
 			const result = convertMarkdownBold(e.target.value);
+			htmlOutput.textContent = result;
+			preview.innerHTML = result;
+		}
+		else if (italicRegex.test(e.target.value))
+		{
+			console.log("------ Italic -------");
+			const result = convertMarkdownItalic(e.target.value);
 			htmlOutput.textContent = result;
 			preview.innerHTML = result;
 		}
