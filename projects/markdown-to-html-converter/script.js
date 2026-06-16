@@ -84,12 +84,40 @@ function convertMarkdownLink(content) {
 	return result;	
 }
 
+function convertMarkdownQuote(content) {
+	const regex = /^[ \t]*> (.+)/;
+	const quotePatternRegex = /^[ \t]*> /;
+	const lines = content.split("\n").filter(line => line.trim() !== "");
+	const result = [];
+	let i = 0;
+
+	while (i < lines.length) {
+		if (regex.test(lines[i])) {
+		const quoteText = lines[i].replace(quotePatternRegex, "");
+		const buffer = [quoteText];
+
+		while (i + 1 < lines.length && !quotePatternRegex.test(lines[i + 1])) {
+			i++;
+			buffer.push(lines[i]);
+		}
+
+		result.push(`<blockquote>${buffer.join(" ")}</blockquote>`);
+		} else {
+		result.push(lines[i]);
+		}
+		i++;
+	}
+
+	return result.join("\n");
+}
+
 function convertMarkdown() {
 	const headingRegex = /^[ \t]*(#+) (.+)/;
 	const boldRegex = /(\*\*|__)(.*?)\1/;
 	const italicRegex = /(\*|_)(.*?)\1/;
 	const imgRegex = /!\[(.*?)\]\((.*?)\)/;
 	const linkRegex = /\[(.*?)\]\((.*?)\)/;
+	const quoteRegex = /^[ \t]*> (.+)/;
 	markdownInput.addEventListener('input', (e) => {
 		if (headingRegex.test(e.target.value))
 		{
@@ -123,6 +151,13 @@ function convertMarkdown() {
 		{
 			console.log("------ Link -------");
 			const result = convertMarkdownLink(e.target.value);
+			htmlOutput.textContent = result;
+			preview.innerHTML = result;
+		}
+		else if (quoteRegex.test(e.target.value))
+		{
+			console.log("------ Quote -------");
+			const result = convertMarkdownQuote(e.target.value);
 			htmlOutput.textContent = result;
 			preview.innerHTML = result;
 		}
