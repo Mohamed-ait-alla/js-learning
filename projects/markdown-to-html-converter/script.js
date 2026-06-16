@@ -118,55 +118,55 @@ function convertMarkdown() {
 	const imgRegex = /!\[(.*?)\]\((.*?)\)/;
 	const linkRegex = /\[(.*?)\]\((.*?)\)/;
 	const quoteRegex = /^[ \t]*> (.+)/;
-	markdownInput.addEventListener('input', (e) => {
-		if (headingRegex.test(e.target.value))
-		{
-			console.log("------ Heading -------");
-			const result = convertMarkdownHeading(e.target.value);
-			htmlOutput.textContent = result;
-			preview.innerHTML = result;
-		}
-		else if (boldRegex.test(e.target.value))
-		{
-			console.log("------ Strong -------");
-			const result = convertMarkdownBold(e.target.value);
-			htmlOutput.textContent = result;
-			preview.innerHTML = result;
-		}
-		else if (italicRegex.test(e.target.value))
-		{
-			console.log("------ Italic -------");
-			const result = convertMarkdownItalic(e.target.value);
-			htmlOutput.textContent = result;
-			preview.innerHTML = result;
-		}
-		else if (imgRegex.test(e.target.value))
-		{
-			console.log("------ Image -------");
-			const result = convertMarkdownImage(e.target.value);
-			htmlOutput.textContent = result;
-			preview.innerHTML = result;
-		}
-		else if (linkRegex.test(e.target.value))
-		{
-			console.log("------ Link -------");
-			const result = convertMarkdownLink(e.target.value);
-			htmlOutput.textContent = result;
-			preview.innerHTML = result;
-		}
-		else if (quoteRegex.test(e.target.value))
-		{
-			console.log("------ Quote -------");
-			const result = convertMarkdownQuote(e.target.value);
-			htmlOutput.textContent = result;
-			preview.innerHTML = result;
-		}
-		else
-		{
-			htmlOutput.textContent = e.target.value;
-			preview.textContent = e.target.value;
-		}
-	});
+	const input = markdownInput.value;
+	let result = "";
+	if (headingRegex.test(input))
+	{
+		console.log("------ Heading -------");
+		result = convertMarkdownHeading(input);
+	}
+	else if (boldRegex.test(input))
+	{
+		console.log("------ Strong -------");
+		result = convertMarkdownBold(input);
+	}
+	else if (italicRegex.test(input))
+	{
+		console.log("------ Italic -------");
+		result = convertMarkdownItalic(input);
+	}
+	else if (imgRegex.test(input))
+	{
+		console.log("------ Image -------");
+		result = convertMarkdownImage(input);
+	}
+	else if (linkRegex.test(input))
+	{
+		console.log("------ Link -------");
+		result = convertMarkdownLink(input);
+	}
+	else if (quoteRegex.test(input))
+	{
+		console.log("------ Quote -------");
+		result = convertMarkdownQuote(input);
+	}
+	else
+	{
+		result = input;
+	}
+
+	return result;
 }
 
-convertMarkdown();
+function displayResults() {
+	console.log("yes it's called");
+	const result = convertMarkdown();
+	console.log(result);
+	htmlOutput.textContent = result;
+	preview.innerHTML = result;
+}
+
+
+markdownInput.addEventListener('input', () => {
+	displayResults();
+})
