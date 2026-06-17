@@ -35,10 +35,10 @@ function convertMarkdownBold(content) {
 					.filter(line => line.trim() !== "")
 					.map(line => {
 						const withStrong = line.replace(regex, "<strong>$2</strong>");
-						return (withStrong !== "<strong></strong>") ? `<p>${withStrong}</p>` : withStrong;
+						return withStrong;
 					})
 					.join("\n");
-
+	console.log("bold called: ", result);
 	return result;
 }
 
@@ -49,11 +49,39 @@ function convertMarkdownItalic(content) {
 					.filter(line => line.trim() !== "")
 					.map(line => {
 						const withItalic = line.replace(regex, "<em>$2</em>");
-						return (withItalic !== "<em></em>") ? `<p>${withItalic}</p>` : withItalic;
+						return withItalic;
 					})
 					.join("\n");
 
 	return result;
+}
+
+function convertMarkdownInline(content) {
+    const InlineRegex = /(\*\*|__)([^*_]*?)(\*|_)(.*?)\3([^*_]*?)\1/g;
+	const boldRegex = /(\*\*|__)(.*?)\1/g;
+	const italicRegex = /(\*|_)(.*?)\1/g;
+
+    let result = content
+					.split("\n")
+					.filter(line => line.trim() !== "")
+					.map(line => {
+
+						const result = line.replace(InlineRegex, (match, boldOpen, before, italicDelim, italicContent, after) => {
+						return `<strong>${before}<em>${italicContent}</em>${after}</strong>`;
+					});
+					return result;
+					})
+					.join("\n");
+
+    result = result.replace(boldRegex, (match, delim, inner) => {
+        return `<strong>${inner}</strong>`;
+    });
+
+    result = result.replace(italicRegex, (match, delim, inner) => {
+        return `<em>${inner}</em>`;
+    });
+    
+    return result;
 }
 
 function convertMarkdownImage(content) {
@@ -119,47 +147,19 @@ function convertMarkdown() {
 	const linkRegex = /\[(.*?)\]\((.*?)\)/;
 	const quoteRegex = /^[ \t]*> (.+)/;
 	const input = markdownInput.value;
-	let result = "";
-	if (headingRegex.test(input))
-	{
-		console.log("------ Heading -------");
-		result = convertMarkdownHeading(input);
-	}
-	else if (boldRegex.test(input))
-	{
-		console.log("------ Strong -------");
-		result = convertMarkdownBold(input);
-	}
-	else if (italicRegex.test(input))
-	{
-		console.log("------ Italic -------");
-		result = convertMarkdownItalic(input);
-	}
-	else if (imgRegex.test(input))
-	{
-		console.log("------ Image -------");
-		result = convertMarkdownImage(input);
-	}
-	else if (linkRegex.test(input))
-	{
-		console.log("------ Link -------");
-		result = convertMarkdownLink(input);
-	}
-	else if (quoteRegex.test(input))
-	{
-		console.log("------ Quote -------");
-		result = convertMarkdownQuote(input);
-	}
-	else
-	{
-		result = input;
-	}
+	let result = input;
+
+	result = convertMarkdownHeading(result);
+	result = convertMarkdownInline(result);
+	result = convertMarkdownImage(result);
+	result = convertMarkdownLink(result);
+	result = convertMarkdownQuote(result);
 
 	return result;
 }
 
 function displayResults() {
-	console.log("yes it's called");
+	// console.log("yes it's called");
 	const result = convertMarkdown();
 	console.log(result);
 	htmlOutput.textContent = result;
