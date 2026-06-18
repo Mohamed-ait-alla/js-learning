@@ -2,11 +2,11 @@ const markdownInput = document.getElementById("markdown-input");
 const htmlOutput = document.getElementById("html-output");
 const preview = document.getElementById("preview");
 
-
+// function responsible for heading conversion
 function convertMarkdownHeading(content) {
-	let result = "";
-	const regex = /^[ \t]*(#+) (.+)/gm; 
-	const matches = [...content.matchAll(regex)];
+	let		result = "";
+	const	headingRegex = /^[ \t]*(#+) (.+)/gm; 
+	const	matches = [...content.matchAll(headingRegex)];
 
 	if (!matches || matches.length === 0)
 		return content;
@@ -28,34 +28,7 @@ function convertMarkdownHeading(content) {
 	return result;
 }
 
-function convertMarkdownBold(content) {
-	const regex = /(\*\*|__)(.*?)\1/gm; 
-	const result = content
-					.split("\n")
-					.filter(line => line.trim() !== "")
-					.map(line => {
-						const withStrong = line.replace(regex, "<strong>$2</strong>");
-						return withStrong;
-					})
-					.join("\n");
-	console.log("bold called: ", result);
-	return result;
-}
-
-function convertMarkdownItalic(content) {
-	const regex = /(\*|_)(.*?)\1/gm;
-	const result = content
-					.split("\n")
-					.filter(line => line.trim() !== "")
-					.map(line => {
-						const withItalic = line.replace(regex, "<em>$2</em>");
-						return withItalic;
-					})
-					.join("\n");
-
-	return result;
-}
-
+// function responsible for Bold and/or Italic conversion
 function convertMarkdownInline(content) {
     const InlineRegex = /(\*\*|__)([^*_]*?)(\*|_)(.*?)\3([^*_]*?)\1/g;
 	const boldRegex = /(\*\*|__)(.*?)\1/g;
@@ -84,13 +57,14 @@ function convertMarkdownInline(content) {
     return result;
 }
 
+// function responsible for images conversion
 function convertMarkdownImage(content) {
-	const regex = /!\[(.*?)\]\((.*?)\)/gm;
+	const imageRegex = /!\[(.*?)\]\((.*?)\)/gm;
 	const result = content
 					.split("\n")
 					.filter(line => line.trim() !== "")
 					.map(line => {
-						const withImageTag = line.replace(regex, '<img alt="$1" src="$2">');
+						const withImageTag = line.replace(imageRegex, '<img alt="$1" src="$2">');
 						return withImageTag;
 					})
 					.join("\n");
@@ -98,13 +72,14 @@ function convertMarkdownImage(content) {
 	return result;
 }
 
+// function responsible for links conversion
 function convertMarkdownLink(content) {
-	const regex = /\[(.*?)\]\((.*?)\)/gm;
+	const linkRegex = /\[(.*?)\]\((.*?)\)/gm;
 	const result = content
 					.split("\n")
 					.filter(line => line.trim() !== "")
 					.map(line => {
-						const withImageTag = line.replace(regex, '<a href="$2">$1</a>');
+						const withImageTag = line.replace(linkRegex, '<a href="$2">$1</a>');
 						return withImageTag;
 					})
 					.join("\n");
@@ -112,6 +87,7 @@ function convertMarkdownLink(content) {
 	return result;	
 }
 
+// function responsible for quotes conversion
 function convertMarkdownQuote(content) {
 	const regex = /^[ \t]*> (.+)/;
 	const quotePatternRegex = /^[ \t]*> /;
@@ -139,15 +115,9 @@ function convertMarkdownQuote(content) {
 	return result.join("\n");
 }
 
+// function responsible for running the workflow and return the result
 function convertMarkdown() {
-	const headingRegex = /^[ \t]*(#+) (.+)/;
-	const boldRegex = /(\*\*|__)(.*?)\1/;
-	const italicRegex = /(\*|_)(.*?)\1/;
-	const imgRegex = /!\[(.*?)\]\((.*?)\)/;
-	const linkRegex = /\[(.*?)\]\((.*?)\)/;
-	const quoteRegex = /^[ \t]*> (.+)/;
-	const input = markdownInput.value;
-	let result = input;
+	let result = markdownInput.value;
 
 	result = convertMarkdownHeading(result);
 	result = convertMarkdownInline(result);
@@ -158,10 +128,10 @@ function convertMarkdown() {
 	return result;
 }
 
+// function responsible for rendering results
 function displayResults() {
-	// console.log("yes it's called");
 	const result = convertMarkdown();
-	console.log(result);
+
 	htmlOutput.textContent = result;
 	preview.innerHTML = result;
 }
