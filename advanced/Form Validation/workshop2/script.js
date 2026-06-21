@@ -188,7 +188,6 @@ form.addEventListener("change", (e) => {
 form.addEventListener("submit", (e) => {
 	e.preventDefault();
 	const formObj = validateForm();
-	console.log("hi: ", formObj["complaints-group"]);
 	const invalidMsg = document.getElementById("invalid-message");
 	if (isValid(formObj)) {
 		invalidMsg.innerText = "";
